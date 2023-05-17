@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tempArrayList:ArrayList<News>
     private lateinit var imageId:Array<Int>
     private lateinit var headings:Array<String>
+    private lateinit var briefNews:Array<String>
 
     private lateinit var news:Array<String>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getUserData(){
         for(i in imageId.indices){
-            val news = News(imageId[i],headings[i])
+            val news = News(imageId[i],headings[i],news[i])
             newsArrayList.add(news)
         }
         tempArrayList.addAll(newsArrayList)
@@ -109,39 +110,39 @@ class MainActivity : AppCompatActivity() {
         var adapter = MyAdapter(tempArrayList)
 
 
-        val swipegesture = object : SwipeGestures(this){
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val from_pos = viewHolder.adapterPosition
-                val to_pos = target.adapterPosition
-
-                Collections.swap(newsArrayList,from_pos,to_pos)
-                adapter.notifyItemMoved(from_pos,to_pos)
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-                when(direction){
-                    ItemTouchHelper.LEFT->{
-                        adapter.deleteItem(viewHolder.adapterPosition)
-                    }
-                    ItemTouchHelper.RIGHT ->{
-                        val archieveItem = newsArrayList[viewHolder.adapterPosition]
-                        adapter.deleteItem(viewHolder.adapterPosition)
-                        adapter.addToArchieve(newsArrayList.size,archieveItem)
-                    }
-                }
-            }
-        }
-
-        val touchHelper = ItemTouchHelper(swipegesture)
-        touchHelper.attachToRecyclerView(newRecyclerView)
+//        val swipegesture = object : SwipeGestures(this){
+//            override fun onMove(
+//                recyclerView: RecyclerView,
+//                viewHolder: RecyclerView.ViewHolder,
+//                target: RecyclerView.ViewHolder
+//            ): Boolean {
+//                val from_pos = viewHolder.adapterPosition
+//                val to_pos = target.adapterPosition
+//
+//                Collections.swap(newsArrayList,from_pos,to_pos)
+//                adapter.notifyItemMoved(from_pos,to_pos)
+//                return false
+//            }
+//
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//
+//                when(direction){
+//                    ItemTouchHelper.LEFT->{
+//                        adapter.deleteItem(viewHolder.adapterPosition)
+//                    }
+//                    ItemTouchHelper.RIGHT ->{
+//                        val archieveItem = newsArrayList[viewHolder.adapterPosition]
+//                        adapter.deleteItem(viewHolder.adapterPosition)
+//                        adapter.addToArchieve(newsArrayList.size,archieveItem)
+//                    }
+//                }
+//            }
+//        }
+//
+//        val touchHelper = ItemTouchHelper(swipegesture)
+//        touchHelper.attachToRecyclerView(newRecyclerView)
         newRecyclerView.adapter = adapter
-        adapter.setOnItemClickListener(object : MyAdapter.onItemClickLister{
+      /*  adapter.setOnItemClickListener(object : MyAdapter.onItemClickLister{
             override fun onItemClick(position: Int) {
 //                 Toast.makeText(this@MainActivity,"You clicked on item no. $position",Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@MainActivity,NewsActivity::class.java)
@@ -151,6 +152,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-        })
+        })*/
     }
 }
